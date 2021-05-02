@@ -68,7 +68,7 @@
 
           <el-form-item label="入党申请">
             <el-date-picker
-              v-model="applyTime"
+              v-model="queryParams.applyTime"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -79,7 +79,7 @@
 
           <el-form-item label="积极分子">
             <el-date-picker
-              v-model="activistsTime"
+              v-model="queryParams.activistsTime"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -90,7 +90,7 @@
 
           <el-form-item label="发展对象">
             <el-date-picker
-              v-model="developTime"
+              v-model="queryParams.developTime"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -101,7 +101,7 @@
 
           <el-form-item label="预备党员">
             <el-date-picker
-              v-model="probationaryTime"
+              v-model="queryParams.probationaryTime"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -112,7 +112,7 @@
 
           <el-form-item label="正式党员">
             <el-date-picker
-              v-model="officialTime"
+              v-model="queryParams.officialTime"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -218,7 +218,7 @@
 
           <el-table-column label="确认为正式时间" align="center" prop="officialTime" v-if="columns[11].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.officialTime) }}</span>
+              <span>{{scope.row.officialTime}}</span>
             </template>
           </el-table-column>
 
@@ -647,6 +647,11 @@
               message: "请输入正确的手机号码",
               trigger: "blur"
             }
+          ],
+          identityNumber: [
+            {
+
+            }
           ]
         }
       };
@@ -674,7 +679,7 @@
       /** 查询用户列表 */
       getList() {
         this.loading = true;
-        listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        listUser(this.queryParams).then(response => {
             this.userList = response.rows;
             this.total = response.total;
             this.loading = false;
@@ -705,15 +710,28 @@
       // 表单重置
       reset() {
         this.form = {
-          userId: undefined,
-          deptId: undefined,
           userName: undefined,
           nickName: undefined,
+          userId: undefined,
+          deptId: undefined,
           password: undefined,
           phonenumber: undefined,
           email: undefined,
           sex: undefined,
           status: "0",
+          applyTime : undefined,
+          // 确认为积极分子时间
+          activistsTime: undefined,
+          // 确认为发展对象时间
+          developTime: undefined,
+          // 确认为预备党员时间
+          probationaryTime: undefined,
+          // 确认为正式党员时间
+          officialTime: undefined,
+          //身份证号
+          identityNumber: undefined,
+          //出生年月
+          birthDay: undefined,
           remark: undefined,
           postIds: [],
           roleIds: []
