@@ -32,7 +32,7 @@
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;color: #f8fafb;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
@@ -147,18 +147,18 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-image: url("../assets/images/bodyBg.44b6af6b.jpg");
   background-size: cover;
 }
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #707070;
+  color: #f8fafb;
 }
 
 .login-form {
   border-radius: 6px;
-  background: #ffffff;
+  background: #ea160770;
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {
@@ -202,4 +202,17 @@ export default {
 .login-code-img {
   height: 38px;
 }
+.el-button--primary{
+  color: #fff;
+  background-color: #e7ce25 !important;
+  border-color: #e7ce25 !important;
+}
+.el-button--primary:focus,.el-button--primary:hover{
+  background: #f6dd04!important;
+  border-color:#f6dd04!important;
+  color:#FFF}
+.el-button--primary.is-active,.el-button--primary:active{
+  background: #d0b80a!important;
+  border-color:#d0b80a!important;
+  color:#FFF}
 </style>
