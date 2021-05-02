@@ -189,36 +189,36 @@
           <el-table-column label="学号" width="120" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
           <el-table-column label="姓名" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
           <el-table-column label="党支部" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="班号" align="center" key="classnumber" prop="classnumber" v-if="columns[7].visible" width="120" />
+          <el-table-column label="班号" align="center" key="className" prop="className" v-if="columns[7].visible" width="120" />
           <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-          <el-table-column label="目前身份" align="center" key="status" v-if="columns[5].visible" width="120" />
-          <el-table-column label="递交入党申请书时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+          <el-table-column label="目前身份" align="center" key="status" prop="status" v-if="columns[5].visible" width="120" />
+          <el-table-column label="递交入党申请书时间" align="center" prop="applyTime" v-if="columns[6].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{scope.row.applyTime}}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="确认为积极分子时间" align="center" prop="createTime" v-if="columns[8].visible" width="160">
+          <el-table-column label="确认为积极分子时间" align="center" prop="activistsTime" v-if="columns[8].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{ scope.row.activistsTime }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="确认为发展对象时间" align="center" prop="createTime" v-if="columns[9].visible" width="160">
+          <el-table-column label="确认为发展对象时间" align="center" prop="developTime" v-if="columns[9].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{scope.row.developTime }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="确认为预备党员时间" align="center" prop="createTime" v-if="columns[10].visible" width="160">
+          <el-table-column label="确认为预备党员时间" align="center" prop="probationaryTime" v-if="columns[10].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{scope.row.probationaryTime }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="确认为正式时间" align="center" prop="createTime" v-if="columns[11].visible" width="160">
+          <el-table-column label="确认为正式时间" align="center" prop="officialTime" v-if="columns[11].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
+              <span>{{ parseTime(scope.row.officialTime) }}</span>
             </template>
           </el-table-column>
 
@@ -267,8 +267,8 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <!-- 添加或修改对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
@@ -277,8 +277,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="党支部" prop="deptId">
-              <treeselect v-model="form.deptId" :options="partyOptions" :show-count="true" placeholder="请选择归属党支部" />
+            <el-form-item label="党支部" prop="deptName">
+              <treeselect v-model="form.deptName" :options="deptOptions" :show-count="true" placeholder="请选择归属党支部" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -359,6 +359,97 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="递交入党申请书时间" prop="applyTime">
+              <el-date-picker
+                v-model="form.applyTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="确认为积极分子时间" prop="activistsTime">
+              <el-date-picker
+                v-model="form.activistsTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="确认为发展对象时间" prop="developTime">
+              <el-date-picker
+                v-model="form.developTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="确认为预备党员时间" prop="probationaryTime">
+              <el-date-picker
+                v-model="form.probationaryTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="确认为正式党员时间" prop="officialTime">
+              <el-date-picker
+                v-model="form.officialTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="身份证号码" prop="identityNumber">
+              <el-input v-model="form.identityNumber" placeholder="请输入身份证号码" maxlength="18" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="生日" prop="birthDay">
+              <el-date-picker
+                v-model="form.birthDay"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="班号" prop="className">
+              <el-input v-model="form.className" placeholder="请输入班号"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注">
@@ -435,7 +526,7 @@
         // 弹出层标题
         title: "",
         // 党支部树选项
-        partyOptions: undefined,
+        deptOptions: undefined,
         // 是否显示弹出层
         open: false,
         // 党支部名称
@@ -761,5 +852,4 @@
       }
     }
   };
-  
 </script>
