@@ -141,7 +141,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .login {
   display: flex;
   justify-content: center;
@@ -203,7 +203,7 @@ export default {
   height: 38px;
 }
 .el-button--primary{
-  color: #fff;
+  color: #110202;
   background-color: #e7ce25 !important;
   border-color: #e7ce25 !important;
 }
@@ -214,5 +214,5 @@ export default {
 .el-button--primary.is-active,.el-button--primary:active{
   background: #d0b80a!important;
   border-color:#d0b80a!important;
-  color:#FFF}
+  color:#110202}
 </style>
