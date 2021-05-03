@@ -188,6 +188,7 @@
           <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
           <el-table-column label="学号" width="120" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
           <el-table-column label="姓名" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="民族" align="center" key="nation" prop="nation" v-if="columns[15].visible" :show-overflow-tooltip="true" />
           <el-table-column label="党支部" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
           <el-table-column label="班号" align="center" key="className" prop="className" v-if="columns[7].visible" width="120" />
           <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
@@ -469,6 +470,13 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="民族" prop="nation">
+              <el-input v-model="form.nation" placeholder="请填写全名，如“汉族”" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="24">
             <el-form-item label="备注">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
@@ -598,6 +606,8 @@
           userName: undefined,
           //姓名
           nickName: undefined,
+          //民族
+          nation: undefined,
           //党支部
           deptId: undefined,
           //手机号码
@@ -639,7 +649,8 @@
           { key: 11, label: `确认为正式党员时间`, visible: true },
           { key: 12, label: `身份证号`, visible: true },
           { key: 13, label: `出生年月`, visible: true },
-          { key: 14, label: `备注`, visible: true }
+          { key: 14, label: `备注`, visible: true },
+          { key: 15, label: `民族`, visible: true }
         ],
         // 表单校验
         rules: {
@@ -738,6 +749,7 @@
         this.form = {
           userName: undefined,
           nickName: undefined,
+          nation:undefined,
           userId: undefined,
           deptId: undefined,
           password: undefined,

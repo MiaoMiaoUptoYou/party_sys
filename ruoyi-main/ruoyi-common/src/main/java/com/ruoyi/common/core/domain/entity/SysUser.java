@@ -40,6 +40,10 @@ public class SysUser extends BaseEntity
     @Excel(name = "姓名")
     private String nickName;
 
+    /** 用户民族 */
+    @Excel(name = "民族")
+    private String nation;
+
     /** 用户邮箱 */
     @Excel(name = "用户邮箱")
     private String email;
@@ -52,8 +56,8 @@ public class SysUser extends BaseEntity
     @Excel(name = "身份证号")
     private String identityNumber;
 
-    /** 团支部 */
-    @Excel(name = "团支部")
+    /** 班号 */
+    @Excel(name = "班号")
     private String className;
 
     /** 用户性别 */
@@ -70,7 +74,7 @@ public class SysUser extends BaseEntity
     private String salt;
 
     /** 状态（0=申请入党积极分子,1=入党积极分子,2=发展对象,3=预备党员,4=正式党员） */
-    @Excel(name = "状态")
+    @Excel(name = "状态", readConverterExp = "0=递交完入党申请书,1=入党积极分子,2=发展对象,3=预备党员,4=正式党员")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
@@ -159,6 +163,7 @@ public class SysUser extends BaseEntity
                 ", deptId=" + deptId +
                 ", userName='" + userName + '\'' +
                 ", nickName='" + nickName + '\'' +
+                ", nation='" + nation + '\'' +
                 ", email='" + email + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", identityNumber='" + identityNumber + '\'' +
@@ -275,6 +280,16 @@ public class SysUser extends BaseEntity
     public void setNickName(String nickName)
     {
         this.nickName = nickName;
+    }
+
+    public String getNation()
+    {
+        return nation;
+    }
+
+    public void setNation(String nation)
+    {
+        this.nation = nation;
     }
 
     @NotBlank(message = "用户账号不能为空")
