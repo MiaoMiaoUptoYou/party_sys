@@ -5,7 +5,7 @@
       <el-col :span="4" :xs="24">
         <div class="head-container">
           <el-input
-            v-model="deptId"
+            v-model="deptName"
             placeholder="请输入党支部名称"
             clearable
             size="small"
@@ -191,34 +191,52 @@
           <el-table-column label="党支部" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
           <el-table-column label="班号" align="center" key="className" prop="className" v-if="columns[7].visible" width="120" />
           <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-          <el-table-column label="目前身份" align="center" key="status" prop="status" v-if="columns[5].visible" width="120" />
+          <el-table-column label="目前身份" align="center" v-if="columns[5].visible" width="120" >
+            <template slot-scope="scope" prop="status">
+              <span v-if="scope.row.status==='0'">递交完入党申请书</span>
+              <span v-if="scope.row.status==='1'">入党积极分子</span>
+              <span v-if="scope.row.status==='2'">发展对象</span>
+              <span v-if="scope.row.status==='3'">预备党员</span>
+              <span v-if="scope.row.status==='4'">正式党员</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="性别" align="center" v-if="columns[5].visible" width="120" >
+            <template slot-scope="scope" prop="sex">
+              <span v-if="scope.row.sex==='0'">男</span>
+              <span v-if="scope.row.sex==='1'">女</span>
+              <span v-if="scope.row.sex==='2'">未知</span>
+            </template>
+          </el-table-column>
+
+
           <el-table-column label="递交入党申请书时间" align="center" prop="applyTime" v-if="columns[6].visible" width="160">
             <template slot-scope="scope">
-              <span>{{scope.row.applyTime}}</span>
+              <span>{{parseTimeDay(scope.row.applyTime)}}</span>
             </template>
           </el-table-column>
 
           <el-table-column label="确认为积极分子时间" align="center" prop="activistsTime" v-if="columns[8].visible" width="160">
             <template slot-scope="scope">
-              <span>{{ scope.row.activistsTime }}</span>
+              <span>{{ parseTimeDay(scope.row.activistsTime) }}</span>
             </template>
           </el-table-column>
 
           <el-table-column label="确认为发展对象时间" align="center" prop="developTime" v-if="columns[9].visible" width="160">
             <template slot-scope="scope">
-              <span>{{scope.row.developTime }}</span>
+              <span>{{parseTimeDay(scope.row.developTime) }}</span>
             </template>
           </el-table-column>
 
           <el-table-column label="确认为预备党员时间" align="center" prop="probationaryTime" v-if="columns[10].visible" width="160">
             <template slot-scope="scope">
-              <span>{{scope.row.probationaryTime }}</span>
+              <span>{{parseTimeDay(scope.row.probationaryTime) }}</span>
             </template>
           </el-table-column>
 
           <el-table-column label="确认为正式时间" align="center" prop="officialTime" v-if="columns[11].visible" width="160">
             <template slot-scope="scope">
-              <span>{{scope.row.officialTime}}</span>
+              <span>{{parseTimeDay(scope.row.officialTime)}}</span>
             </template>
           </el-table-column>
 
@@ -277,8 +295,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="党支部" prop="deptName">
-              <treeselect v-model="form.deptName" :options="deptOptions" :show-count="true" placeholder="请选择归属党支部" />
+            <el-form-item label="党支部" prop="deptId">
+              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" placeholder="请选择归属党支部" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -530,7 +548,7 @@
         // 是否显示弹出层
         open: false,
         // 党支部名称
-        deptId: undefined,
+        deptName: undefined,
         // 默认密码
         initPassword: undefined,
         // 递交入党申请时间
@@ -581,7 +599,7 @@
           //姓名
           nickName: undefined,
           //党支部
-          deptName: undefined,
+          deptId: undefined,
           //手机号码
           phonenumber: undefined,
           //目前身份
@@ -658,14 +676,14 @@
     },
     watch: {
       // 根据名称筛选党支部树
-      deptId(val) {
+      deptName(val) {
         this.$refs.tree.filter(val);
       }
     },
     created() {
       this.getList();
       this.getTreeselect();
-      this.getDicts("sys_normal_disable").then(response => {
+      this.getDicts("sys_user_status").then(response => {
         this.statusOptions = response.data;
       });
       this.getDicts("sys_user_sex").then(response => {
@@ -676,6 +694,14 @@
       });
     },
     methods: {
+      parseTimeDay(value)
+      {
+        if(value==='')
+          return '';
+        const v=(value || "").split("T")[0];
+        return v;
+      },
+
       /** 查询用户列表 */
       getList() {
         this.loading = true;

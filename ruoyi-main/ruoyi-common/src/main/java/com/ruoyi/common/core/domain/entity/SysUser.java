@@ -70,7 +70,7 @@ public class SysUser extends BaseEntity
     private String salt;
 
     /** 状态（0=申请入党积极分子,1=入党积极分子,2=发展对象,3=预备党员,4=正式党员） */
-    @Excel(name = "状态", readConverterExp = "0=申请入党积极分子,1=入党积极分子,2=发展对象,3=预备党员,4=正式党员")
+    @Excel(name = "状态")
     private String status;
 
     /** 删除标志（0代表存在 2代表删除） */
