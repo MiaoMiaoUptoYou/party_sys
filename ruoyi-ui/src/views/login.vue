@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">党建信息管理系统</h3>
+      <h3 class="title">地理与信息工程学院党建信息管理系统</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -48,7 +48,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright ©地理与信息工程学院.</span>
+      <span>Copyright ©中国地质大学（武汉）地理与信息工程学院党建办公室</span>
     </div>
   </div>
 </template>
