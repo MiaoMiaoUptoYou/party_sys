@@ -72,8 +72,10 @@
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="选择日期"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
 
@@ -83,8 +85,10 @@
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="选择日期"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
 
@@ -94,8 +98,10 @@
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="选择日期"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
 
@@ -105,8 +111,10 @@
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="选择日期"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
 
@@ -116,10 +124,13 @@
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="选择日期"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
+
 
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -209,6 +220,13 @@
               <span v-if="scope.row.sex==='2'">未知</span>
             </template>
           </el-table-column>
+          <el-table-column label="出生年月日" align="center" prop="birthDay" v-if="columns[13].visible" width="160">
+            <template slot-scope="scope">
+              <span>{{parseTimeDay(scope.row.birthDay)}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="身份证号" align="center" key="identityNumber" prop="identityNumber" v-if="columns[12].visible" width="120" />
 
 
           <el-table-column label="递交入党申请书时间" align="center" prop="applyTime" v-if="columns[6].visible" width="160">
@@ -241,6 +259,7 @@
             </template>
           </el-table-column>
 
+          <el-table-column label="备注" align="center" key="remark" prop="remark" v-if="columns[14].visible" width="120" />
 
 
           <el-table-column
