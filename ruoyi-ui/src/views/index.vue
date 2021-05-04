@@ -6,7 +6,7 @@
           <div class="slideshow">
             <ul>
               <li v-for="(img, index) in imgArray" v-show="index===mark" :key="index">
-                <a href="#">
+                <a href="javascript:;">
                   <img :src='img'>
                 </a>
               </li>
@@ -19,20 +19,29 @@
       </el-col>
 
       <el-col :sm="24" :lg="12" style="padding-left: 50px">
-        <el-row>
-          <el-col :span="12">
+        <el-row >
+          <el-col :span="15">
             <h2>通知</h2>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="15">
             <h3>党建办通知</h3>
-            <ul>
-              <li>2020-05-04 《入党推优谈话通知》</li>
-              <li>2020-05-04 《主题党日通知》</li>
-              <li>      </li>
-              <li>      </li>
-            </ul>
+
+              <el-table v-loading="loading" :data="noticeList" class="customer-no-border-table" :show-header="false"
+                        :row-style="{height:'20px'}"
+                        :cell-style="{padding:'0px'}"
+                        style="font-size: 13px">
+                <el-table-column
+                  label="公告标题"
+                  prop="noticeTitle"
+                  :show-overflow-tooltip="true"
+                />
+                <el-table-column label="时间" align="center" prop="createTime" width="150" />
+              </el-table>
+<!--              <li ref="javascript:;" >2020-05-04 《入党推优谈话通知》</li>-->
+<!--              <li ref="javascript:;">2020-05-04 《主题党日通知》</li>-->
+
           </el-col>
         </el-row>
         <el-row>
@@ -447,11 +456,28 @@
 </template>
 
 <script>
+import { listNotice, getNotice, delNotice, addNotice, updateNotice, exportNotice } from "@/api/system/notice";
 export default {
   data () {
     return {
+      // 遮罩层
+      loading: true,
+      // 公告表格数据
+      noticeList: [],
+      // 弹出层标题
+      title: "",
+
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        noticeTitle: undefined,
+        createBy: undefined,
+        status: undefined
+      },
       mark: 0, //比对图片索引的变量
       imgArray: [
+        require('../assets/images/img1.jpg'),
         require('../assets/images/img1.jpg'),
         require('../assets/images/img1.jpg'),
         require('../assets/images/img1.jpg'),
@@ -474,8 +500,18 @@ export default {
     goTarget(href) {
       window.open(href, "_blank");
     },
+    /** 查询公告列表 */
+    getList() {
+      this.loading = true;
+      listNotice(this.queryParams).then(response => {
+        this.noticeList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
   },
   created () {
+    this.getList();
     this.play()
   }
 };
@@ -513,6 +549,8 @@ img {
 .active {
   background: red !important;
 }
+
+
 </style>
 <style scoped lang="scss">
 .home {
@@ -577,4 +615,47 @@ img {
   }
 }
 </style>
-
+<style>
+/*去掉表格单元格边框*/
+.customer-no-border-table th{
+  border:none;
+}
+.customer-no-border-table td,.customer-no-border-table th.is-leaf {
+  border:none;
+}
+/*表格最外边框*/
+.customer-no-border-table .el-table--border, .el-table--group{
+  border: none;
+}
+/*头部边框*/
+.customer-no-border-table thead tr th.is-leaf{
+  border: 0px solid #EBEEF5;
+  border-right: none;
+}
+.customer-no-border-table thead tr th:nth-last-of-type(2){
+  border-right: 0px solid #EBEEF5;
+}
+/*表格最外层边框-底部边框*/
+.customer-no-border-table .el-table--border::after,.customer-no-border-table .el-table--group::after{
+  width: 0;
+}
+.customer-no-border-table::before{
+  width: 0;
+}
+.customer-no-border-table .el-table__fixed-right::before,.el-table__fixed::before{
+  width: 0;
+}
+.customer-no-border-table .el-table__header tr th{
+  background: #fff;
+  color: #333333 ;
+  padding: 3px ;
+  fontWeight: 550 ;
+  height: 36px ;
+  border: 0px;
+  font-size: 15px;
+}
+/*去掉鼠标悬停背景颜色*/
+.el-table tbody tr:hover>td {
+  background-color:#ffffff!important
+}
+</style>
