@@ -2,63 +2,45 @@
   <div class="app-container home">
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
-        <h2>若依后台管理框架</h2>
-        <p>
-          一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了若依管理系统。，她可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。
-        </p>
-        <p>
-          <b>当前版本:</b> <span>v{{ version }}</span>
-        </p>
-        <p>
-          <el-tag type="danger">&yen;免费开源</el-tag>
-        </p>
-        <p>
-          <el-button
-            type="primary"
-            size="mini"
-            icon="el-icon-cloudy"
-            plain
-            @click="goTarget('https://gitee.com/y_project/RuoYi-Vue')"
-            >访问码云</el-button
-          >
-          <el-button
-            size="mini"
-            icon="el-icon-s-home"
-            plain
-            @click="goTarget('http://ruoyi.vip')"
-            >访问主页</el-button
-          >
-        </p>
+        <div class="slide">
+          <div class="slideshow">
+            <ul>
+              <li v-for="(img, index) in imgArray" v-show="index===mark" :key="index">
+                <a href="#">
+                  <img :src='img'>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="bar">
+            <span v-for="(item, index) in imgArray" :class="{ 'active':index===mark }" :key="index"></span>
+          </div>
+        </div>
       </el-col>
 
       <el-col :sm="24" :lg="12" style="padding-left: 50px">
         <el-row>
           <el-col :span="12">
-            <h2>技术选型</h2>
+            <h2>通知</h2>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="6">
-            <h4>后端技术</h4>
+          <el-col :span="12">
+            <h3>党建办通知</h3>
             <ul>
-              <li>SpringBoot</li>
-              <li>Spring Security</li>
-              <li>JWT</li>
-              <li>MyBatis</li>
-              <li>Druid</li>
-              <li>Fastjson</li>
-              <li>...</li>
+              <li>2020-05-04 《入党推优谈话通知》</li>
+              <li>2020-05-04 《主题党日通知》</li>
+              <li>      </li>
+              <li>      </li>
             </ul>
           </el-col>
-          <el-col :span="6">
-            <h4>前端技术</h4>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <h3>支部通知</h3>
             <ul>
-              <li>Vue</li>
-              <li>Vuex</li>
-              <li>Element-ui</li>
-              <li>Axios</li>
-              <li>Sass</li>
-              <li>Quill</li>
+              <li>2020-05-04 《入党推优谈话通知》</li>
+              <li>2020-05-04 《主题党日》</li>
               <li>...</li>
             </ul>
           </el-col>
@@ -70,46 +52,10 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <el-card class="update-log">
           <div slot="header" class="clearfix">
-            <span>联系信息</span>
-          </div>
-          <div class="body">
-            <p>
-              <i class="el-icon-s-promotion"></i> 官网：<el-link
-                href="http://www.ruoyi.vip"
-                target="_blank"
-                >http://www.ruoyi.vip</el-link
-              >
-            </p>
-            <p>
-              <i class="el-icon-user-solid"></i> QQ群：<s>满937441</s>
-              <s>满887144332</s> <s>满180251782</s> <s>满104180207</s>
-              <a href="https://jq.qq.com/?_wv=1027&k=VvjN2nvu" target="_blank"
-                > 186866453</a
-              >
-            </p>
-            <p>
-              <i class="el-icon-chat-dot-round"></i> 微信：<a
-                href="javascript:;"
-                >/ *若依</a
-              >
-            </p>
-            <p>
-              <i class="el-icon-money"></i> 支付宝：<a
-                href="javascript:;"
-                class="支付宝信息"
-                >/ *若依</a
-              >
-            </p>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="8">
-        <el-card class="update-log">
-          <div slot="header" class="clearfix">
-            <span>更新日志</span>
+            <span>最新活动发布</span>
           </div>
           <el-collapse accordion>
-            <el-collapse-item title="v3.4.0 - 2021-02-22">
+            <el-collapse-item title="xxx活动 - 2021-02-22">
               <ol>
                 <li>代码生成模板支持主子表</li>
                 <li>表格右侧工具栏组件支持显隐列</li>
@@ -141,7 +87,7 @@
                 <li>其他细节优化</li>
               </ol>
             </el-collapse-item>
-            <el-collapse-item title="v3.3.0 - 2020-12-14">
+            <el-collapse-item title="xxx活动 - 2020-12-14">
               <ol>
                 <li>新增缓存监控功能</li>
                 <li>支持主题风格配置</li>
@@ -199,7 +145,7 @@
                 <li>其他细节优化</li>
               </ol>
             </el-collapse-item>
-            <el-collapse-item title="v3.2.1 - 2020-11-18">
+            <el-collapse-item title="xxx活动 - 2020-11-18">
               <ol>
                 <li>阻止任意文件下载漏洞</li>
                 <li>代码生成支持上传控件</li>
@@ -213,7 +159,7 @@
                 <li>升级pagehelper到最新版1.3.0</li>
               </ol>
             </el-collapse-item>
-            <el-collapse-item title="v3.2.0 - 2020-10-10">
+            <el-collapse-item title="xxx活动 - 2020-10-10">
               <ol>
                 <li>升级springboot版本到2.1.17 提升安全性</li>
                 <li>升级oshi到最新版本v5.2.5</li>
@@ -251,7 +197,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v3.1.0 - 2020-08-13">
+            <el-collapse-item title="xxx活动 - 2020-08-13">
               <ol>
                 <li>表格工具栏右侧添加刷新&显隐查询组件</li>
                 <li>后端支持CORS跨域请求</li>
@@ -281,7 +227,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v3.0.0 - 2020-07-20">
+            <el-collapse-item title="xxx活动 - 2020-07-20">
               <ol>
                 <li>单应用调整为多模块项目</li>
                 <li>升级element-ui版本到2.13.2</li>
@@ -319,7 +265,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v2.3.0 - 2020-06-01">
+            <el-collapse-item title="xxx活动 - 2020-06-01">
               <ol>
                 <li>升级fastjson到最新版1.2.70 修复高危安全漏洞</li>
                 <li>dev启动默认打开浏览器</li>
@@ -373,7 +319,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v2.2.0 - 2020-03-18">
+            <el-collapse-item title="xxx活动 - 2020-03-18">
               <ol>
                 <li>系统监控新增定时任务功能</li>
                 <li>添加一个打包Web工程bat</li>
@@ -396,7 +342,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v2.1.0 - 2020-02-24">
+            <el-collapse-item title="xxx活动 - 2020-02-24">
               <ol>
                 <li>新增表单构建</li>
                 <li>代码生成支持树表结构</li>
@@ -424,7 +370,7 @@
               </ol>
             </el-collapse-item>
 
-            <el-collapse-item title="v2.0.0 - 2019-12-02">
+            <el-collapse-item title="xxx活动 - 2019-12-02">
               <ol>
                 <li>新增代码生成</li>
                 <li>新增@RepeatSubmit注解，防止重复提交</li>
@@ -438,7 +384,7 @@
                 <li>其他细节优化</li>
               </ol>
             </el-collapse-item>
-            <el-collapse-item title="v1.1.0 - 2019-11-11">
+            <el-collapse-item title="xxx活动 - 2019-11-11">
               <ol>
                 <li>新增在线用户管理</li>
                 <li>新增按钮组功能实现（批量删除、导出、清空）</li>
@@ -453,12 +399,47 @@
                 <li>其他细节优化</li>
               </ol>
             </el-collapse-item>
-            <el-collapse-item title="v1.0.0 - 2019-10-08">
+            <el-collapse-item title="xxx活动 - 2019-10-08">
               <ol>
-                <li>若依前后端分离系统正式发布</li>
+                <li>前后端分离系统正式发布</li>
               </ol>
             </el-collapse-item>
           </el-collapse>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="8">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <span>联系信息</span>
+          </div>
+          <div class="body">
+            <p>
+              <i class="el-icon-s-promotion"></i> 官网：<el-link
+                href="http://www.ruoyi.vip"
+                target="_blank"
+                >https://zhtj.youth.cn/zhtj/</el-link
+              >
+            </p>
+            <p>
+              <i class="el-icon-user-solid"></i> QQ群：<s>已满937441</s>
+              <a href="https://jq.qq.com/?_wv=1027&k=VvjN2nvu" target="_blank"
+                > 225327487</a
+              >
+            </p>
+            <p>
+              <i class="el-icon-chat-dot-round"></i> 党建办联系电话：<a
+                href="javascript:;"
+                >11111111</a
+              >
+            </p>
+            <p>
+              <i class="el-icon-money"></i> 党建办负责人联系电话：<a
+                href="javascript:;"
+                class="支付宝信息"
+                >11111111</a
+              >
+            </p>
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -467,21 +448,72 @@
 
 <script>
 export default {
-  name: "index",
-  data() {
+  data () {
     return {
-      // 版本号
-      version: "3.4.0",
-    };
+      mark: 0, //比对图片索引的变量
+      imgArray: [
+        require('../assets/images/img1.jpg'),
+        require('../assets/images/img1.jpg'),
+        require('../assets/images/img1.jpg'),
+      ]
+    }
   },
   methods: {
+    autoPlay () {
+      this.mark++;
+      if (this.mark === 4) { //当遍历到最后一张图片置零
+        this.mark = 0
+      }
+    },
+    play () {
+      setInterval(this.autoPlay, 2500)
+    },
+    change (i) {
+      this.mark = i
+    },
     goTarget(href) {
       window.open(href, "_blank");
     },
   },
+  created () {
+    this.play()
+  }
 };
 </script>
+<style scoped>
+.slide {
+  width: 600px;
+  height: 320px;
+}
+.slideshow {
+  width: 600px;
+  height: 320px;
+}
 
+img {
+  width: 600px;
+  height: 320px;
+}
+.bar {
+  position: absolute;
+  width: 45%;
+  bottom: 10px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+}
+.bar span {
+  width: 20px;
+  height: 5px;
+  border: 1px solid;
+  background: white;
+  display: inline-block;
+  margin-right: 10px;
+}
+.active {
+  background: red !important;
+}
+</style>
 <style scoped lang="scss">
 .home {
   blockquote {
