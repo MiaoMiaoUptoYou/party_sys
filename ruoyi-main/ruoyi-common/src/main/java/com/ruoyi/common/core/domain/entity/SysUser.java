@@ -29,8 +29,15 @@ public class SysUser extends BaseEntity
     private Long userId;
 
     /** 党支部ID */
-    @Excel(name = "党支部编号", type = Type.IMPORT)
+    @Excel(name = "党支部编号", cellType = ColumnType.NUMERIC, prompt = "党支部编号，详情请见网站党支部管理")
     private Long deptId;
+
+    /** 党支部对象 */
+    @Excels({
+            @Excel(name = "党支部名称", targetAttr = "deptName", type = Type.EXPORT),
+            @Excel(name = "党支部负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
+    private SysDept dept;
 
     /** 用户账号 */
     @Excel(name = "学号")
@@ -89,36 +96,30 @@ public class SysUser extends BaseEntity
     private Date  loginDate;
 
     /** 递交入党申请书时间 */
-    @Excel(name = "递交入党申请书时间", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "递交入党申请书时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  applyTime;
 
     /** 确认为积极分子时间 */
-    @Excel(name = "确认为积极分子时间", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "确认为积极分子时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  activistsTime;
 
     /** 确认为发展对象时间 */
-    @Excel(name = "确认为发展对象时间", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "确认为发展对象时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date   developTime;
 
     /** 确认为预备党员时间 */
-    @Excel(name = "确认为预备党员时间", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "确认为预备党员时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  probationaryTime;
 
     /** 确认为正式党员时间 */
-    @Excel(name = "确认为正式党员时间", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "确认为正式党员时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  officialTime;
 
     /** 出生年月 */
-    @Excel(name = "出生年月", width = 30, dateFormat = "yyyy-MM-dd", type = Type.EXPORT)
+    @Excel(name = "出生年月", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  birthDay;
 
 
-    /** 党支部对象 */
-    @Excels({
-        @Excel(name = "党支部名称", targetAttr = "deptName", type = Type.EXPORT),
-        @Excel(name = "党支部负责人", targetAttr = "leader", type = Type.EXPORT)
-    })
-    private SysDept dept;
 
     public String getClassName() {
         return className;
@@ -223,6 +224,10 @@ public class SysUser extends BaseEntity
     }
 
     /** 角色对象 */
+    @Excels({
+            @Excel(name = "角色名称", targetAttr = "roleName"),
+            @Excel(name = "党支部负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
     private List<SysRole> roles;
 
     /** 角色组 */
