@@ -68,7 +68,7 @@
 
           <el-form-item label="入党申请">
             <el-date-picker
-              v-model="queryParams.applyTime"
+              v-model="applydateRange"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -81,7 +81,7 @@
 
           <el-form-item label="积极分子">
             <el-date-picker
-              v-model="queryParams.activistsTime"
+              v-model="activistdateRange"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -94,7 +94,7 @@
 
           <el-form-item label="发展对象">
             <el-date-picker
-              v-model="queryParams.developTime"
+              v-model="developdateRange"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -107,7 +107,7 @@
 
           <el-form-item label="预备党员">
             <el-date-picker
-              v-model="queryParams.probationaryTime"
+              v-model="probationarydateRange"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -120,7 +120,7 @@
 
           <el-form-item label="正式党员">
             <el-date-picker
-              v-model="queryParams.officialTime"
+              v-model="officialdateRange"
               size="small"
               style="width: 240px"
               value-format="yyyy-MM-dd"
@@ -578,6 +578,18 @@
         deptName: undefined,
         // 默认密码
         initPassword: undefined,
+        //日期范围
+        dateRange: [],
+        //递交入党申请时间范围
+        applydateRange: [],
+        //成为积极分子时间范围
+        activistdateRange: [],
+        //成为发展对象时间范围
+        developdateRange: [],
+        //成为预备党员时间范围
+        probationarydateRange: [],
+        //成为正式党员时间范围
+        officialdateRange: [],
         // 递交入党申请时间
         applyTime: "",
         // 成为积极分子时间
@@ -735,6 +747,34 @@
       /** 查询用户列表 */
       getList() {
         this.loading = true;
+        this.queryParams.params = {}
+        if (null != this.applydateRange && '' != this.applydateRange) {
+          this.queryParams.params["beginapply"] = this.applydateRange[0];
+          this.queryParams.params["endapply"] = this.applydateRange[1];
+        }
+        if (null != this.activistdateRange && '' != this.activistdateRange) {
+          this.queryParams.params["beginactivist"] = this.activistdateRange[0];
+          this.queryParams.params["endactivist"] = this.activistdateRange[1];
+        }
+        if (null != this.developdateRange && '' != this.developdateRange) {
+          this.queryParams.params["begindevelop"] = this.developdateRange[0];
+          this.queryParams.params["enddevelop"] = this.developdateRange[1];
+        }
+        if (null != this.probationarydateRange && '' != this.probationarydateRange) {
+          this.queryParams.params["beginprobationry"] = this.probationarydateRange[0];
+          this.queryParams.params["endprobationry"] = this.probationarydateRange[1];
+        }
+        if (null != this.officialdateRange && '' != this.officialdateRange) {
+          this.queryParams.params["beginofficial"] = this.officialdateRange[0];
+          this.queryParams.params["endofficial"] = this.officialdateRange[1];
+        }
+
+        //
+        // this.queryParams = this.addDateRange(this.queryParams,this.applydateRange,"apply");
+        // this.queryParams = this.addDateRange(this.queryParams,this.activistdateRange,"activist");
+        // this.queryParams = this.addDateRange(this.queryParams,this.developdateRange,"develop");
+        // this.queryParams = this.addDateRange(this.queryParams,this.probationarydateRange,"probationry");
+        // this.queryParams = this.addDateRange(this.queryParams,this.officialdateRange,"official");
         listUser(this.queryParams).then(response => {
             this.userList = response.rows;
             this.total = response.total;
@@ -803,6 +843,11 @@
       /** 重置按钮操作 */
       resetQuery() {
         this.dateRange = [];
+        this.applydateRange = [];
+        this.activistdateRange = [];
+        this.developdateRange = [];
+        this.probationarydateRange = [];
+        this.officialdateRange = [];
         this.resetForm("queryForm");
         this.handleQuery();
       },

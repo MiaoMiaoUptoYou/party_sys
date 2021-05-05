@@ -71,6 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userName != null and userName != ''">
 			AND u.user_name like concat('%', #{userName}, '%')
 		</if>
+		<if test="nickName != null and nickName != ''">
+			AND u.nick_name like concat('%', #{nickName}, '%')
+		</if>
 		<if test="status != null and status != ''">
 			AND u.status = #{status}
 		</if>
@@ -83,6 +86,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
 			AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
 		</if>
+
+
+		<if test="params.beginapply != null and params.beginapply != ''"><!-- 结束时间检索 -->
+			AND date_format(u.apply_time,'%y%m%d') &gt;= date_format(#{params.beginapply},'%y%m%d')
+		</if>
+		<if test="params.endapply != null and params.endapply != ''"><!-- 结束时间检索 -->
+			AND date_format(u.apply_time,'%y%m%d') &lt;= date_format(#{params.endapply},'%y%m%d')
+		</if>
+		<if test="params.beginactivist != null and params.beginactivist != ''"><!-- 结束时间检索 -->
+			AND date_format(u.activists_time,'%y%m%d') &gt;= date_format(#{params.beginactivist},'%y%m%d')
+		</if>
+		<if test="params.endactivist != null and params.endactivist != ''"><!-- 结束时间检索 -->
+			AND date_format(u.activists_time,'%y%m%d') &lt;= date_format(#{params.endactivist},'%y%m%d')
+		</if>
+		<if test="params.begindevelop != null and params.begindevelop != ''"><!-- 结束时间检索 -->
+			AND date_format(u.develop_time,'%y%m%d') &gt;= date_format(#{params.begindevelop},'%y%m%d')
+		</if>
+		<if test="params.enddevelop != null and params.enddevelop != ''"><!-- 结束时间检索 -->
+			AND date_format(u.develop_time,'%y%m%d') &lt;= date_format(#{params.enddevelop},'%y%m%d')
+		</if>
+		<if test="params.beginprobationry != null and params.beginprobationry != ''"><!-- 结束时间检索 -->
+			AND date_format(u.probationary_time,'%y%m%d') &gt;= date_format(#{params.beginprobationry},'%y%m%d')
+		</if>
+		<if test="params.endprobationry != null and params.endprobationry != ''"><!-- 结束时间检索 -->
+			AND date_format(u.probationary_time,'%y%m%d') &lt;= date_format(#{params.endprobationry},'%y%m%d')
+		</if>
+
+		<if test="params.beginofficial != null and params.beginofficial != ''"><!-- 结束时间检索 -->
+			AND date_format(u.official_time,'%y%m%d') &gt;= date_format(#{params.beginofficial},'%y%m%d')
+		</if>
+		<if test="params.endofficial != null and params.endofficial != ''"><!-- 结束时间检索 -->
+			AND date_format(u.official_time,'%y%m%d') &lt;= date_format(#{params.endofficial},'%y%m%d')
+		</if>
+
+
 		<if test="deptId != null and deptId != 0">
 			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
 		</if>
