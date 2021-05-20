@@ -119,6 +119,26 @@ public class SysUser extends BaseEntity
     @Excel(name = "出生年月", width = 30, dateFormat = "yyyy-MM-dd")
     private Date  birthDay;
 
+    /** 推优时间 */
+    @Excel(name = "推优时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date promptTime;
+
+    /** 计划发展批次 */
+    @Excel(name = "计划发展批次")
+    private String developBatch;
+
+    /** 导师ID */
+    @Excel(name = "导师ID")
+    private String tutorId;
+
+    /** 导师姓名 */
+    @Excel(name = "导师姓名")
+    private String tutorName;
+
+    /** 导师所属学院研究中心 */
+    @Excel(name = "导师所属学院研究中心")
+    private String searchCenter;
+
 
 
     public String getClassName() {
@@ -184,6 +204,11 @@ public class SysUser extends BaseEntity
                 ", officialTime=" + officialTime +
                 ", birthDay=" + birthDay +
                 ", dept=" + dept +
+                ", promptTime=" + promptTime +
+                ", developBatch=" + developBatch +
+                ", tutorId=" + tutorId +
+                ", tutorName=" + tutorName +
+                ", searchCenter=" + searchCenter +
                 '}';
     }
 
@@ -221,6 +246,14 @@ public class SysUser extends BaseEntity
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public Date getPromptTime() {
+        return promptTime;
+    }
+
+    public void setPromptTime(Date promptTime) {
+        this.promptTime = promptTime;
     }
 
     /** 角色对象 */
@@ -287,16 +320,6 @@ public class SysUser extends BaseEntity
         this.nickName = nickName;
     }
 
-    public String getNation()
-    {
-        return nation;
-    }
-
-    public void setNation(String nation)
-    {
-        this.nation = nation;
-    }
-
     @NotBlank(message = "用户账号不能为空")
     @Size(min = 0, max = 30, message = "用户账号长度不能超过30个字符")
     public String getUserName()
@@ -350,6 +373,53 @@ public class SysUser extends BaseEntity
     public void setAvatar(String avatar)
     {
         this.avatar = avatar;
+    }
+
+    public String getNation()
+    {
+        return nation;
+    }
+
+    public void setNation(String nation)
+    {
+        this.nation = nation;
+    }
+
+    public String getDevelopBatch() { return developBatch; }
+
+    public void setDevelopBatch(String developBatch)
+    {
+        this.developBatch = developBatch;
+    }
+
+    public String getTutorId()
+    {
+        return tutorId;
+    }
+
+    public void setTutorId(String tutorId)
+    {
+        this.tutorId = tutorId;
+    }
+
+    public String getTutorName()
+    {
+        return tutorName;
+    }
+
+    public void setTutorName(String tutorName)
+    {
+        this.tutorName = tutorName;
+    }
+
+    public String getSearchCenter()
+    {
+        return searchCenter;
+    }
+
+    public void setSearchCenter(String searchCenter)
+    {
+        this.searchCenter = searchCenter;
     }
 
 	@JsonIgnore

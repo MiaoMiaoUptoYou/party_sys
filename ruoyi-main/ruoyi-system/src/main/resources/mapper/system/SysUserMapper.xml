@@ -32,6 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="className"       column="class_name"       />
 		<result property="loginDate"       column="login_date"       />
 		<result property="nation"       column="nation"       />
+		<result property="promptTime"       column="prompt_time"       />
+		<result property="developBatch"       column="develop_batch"       />
+		<result property="tutorId"       column="tutor_id"       />
+		<result property="tutorName"       column="tutor_name"       />
+		<result property="searchCenter"       column="search_center"       />
 		<association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
 		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
 	</resultMap>
@@ -55,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.apply_time, u.create_by, u.create_time, u.remark, u.activists_time, u.develop_time, u.probationary_time, u.official_time, u.identity_number, u.birthDay, u.class_name, u.login_date, u.nation,
+        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.apply_time, u.create_by, u.create_time, u.remark, u.activists_time, u.develop_time, u.probationary_time, u.official_time, u.identity_number, u.birthDay, u.class_name, u.login_date, u.nation, u.prompt_time, u.develop_batch, u.tutor_id, u.tutor_name, u.search_center,
         d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
         r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
         from sys_user u
@@ -65,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
-		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.apply_time, u.create_by, u.create_time, u.remark, u.activists_time, u.develop_time, u.probationary_time, u.official_time, u.identity_number, u.birthDay, u.class_name, u.login_date, u.nation, d.dept_name, d.leader from sys_user u
+		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.apply_time, u.create_by, u.create_time, u.remark, u.activists_time, u.develop_time, u.probationary_time, u.official_time, u.identity_number, u.birthDay, u.class_name, u.login_date, u.nation, u.prompt_time, u.develop_batch, u.tutor_id, u.tutor_name, u.search_center, d.dept_name, d.leader from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
 		where u.del_flag = '0'
 		<if test="userName != null and userName != ''">
@@ -80,14 +85,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="phonenumber != null and phonenumber != ''">
 			AND u.phonenumber like concat('%', #{phonenumber}, '%')
 		</if>
+		<if test="nation != null and nation != ''">
+			AND u.nation like concat('%', #{nation}, '%')
+		</if>
+		<if test="className != null and className != ''">
+			AND u.class_name like concat('%', #{className}, '%')
+		</if>
+		<if test="sex != null and sex != ''">
+			AND u.sex like concat('%', #{sex}, '%')
+		</if>
+		<if test="identityNumber != null and identityNumber != ''">
+			AND u.identity_number like concat('%', #{identityNumber}, '%')
+		</if>
+		<if test="developBatch != null and developBatch != ''">
+			AND u.develop_batch like concat('%', #{developBatch}, '%')
+		</if>
+		<if test="tutorId != null and tutorId != ''">
+			AND u.tutor_id like concat('%', #{tutorId}, '%')
+		</if>
+		<if test="tutorName != null and tutorName != ''">
+			AND u.tutor_name like concat('%', #{tutorName}, '%')
+		</if>
+		<if test="searchCenter != null and searchCenter != ''">
+			AND u.search_center like concat('%', #{searchCenter}, '%')
+		</if>
+		<if test="remark != null and remark != ''">
+			AND u.remark like concat('%', #{remark}, '%')
+		</if>
+
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 			AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
 		</if>
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
 			AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
 		</if>
-
-
 		<if test="params.beginapply != null and params.beginapply != ''"><!-- 结束时间检索 -->
 			AND date_format(u.apply_time,'%y%m%d') &gt;= date_format(#{params.beginapply},'%y%m%d')
 		</if>
@@ -118,6 +149,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		<if test="params.endofficial != null and params.endofficial != ''"><!-- 结束时间检索 -->
 			AND date_format(u.official_time,'%y%m%d') &lt;= date_format(#{params.endofficial},'%y%m%d')
+		</if>
+
+		<if test="params.beginprompt != null and params.beginprompt != ''"><!-- 结束时间检索 -->
+			AND date_format(u.prompt_time,'%y%m%d') &gt;= date_format(#{params.beginprompt},'%y%m%d')
+		</if>
+		<if test="params.endprompt != null and params.endprompt != ''"><!-- 结束时间检索 -->
+			AND date_format(u.prompt_time,'%y%m%d') &lt;= date_format(#{params.endprompt},'%y%m%d')
+		</if>
+		<if test="params.beginbirth != null and params.beginbirth != ''"><!-- 结束时间检索 -->
+			AND date_format(u.birthDay,'%y%m%d') &gt;= date_format(#{params.beginbirth},'%y%m%d')
+		</if>
+		<if test="params.endbirth != null and params.endbirth != ''"><!-- 结束时间检索 -->
+			AND date_format(u.birthDay,'%y%m%d') &lt;= date_format(#{params.endbirth},'%y%m%d')
 		</if>
 
 
@@ -173,6 +217,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			birthDay,
 			class_name,
 			nation,
+			prompt_time,
+			develop_batch,
+			tutor_id,
+			tutor_name,
+			search_center,
 			create_time
  		)values(
  			<if test="userId != null and userId != ''">#{userId},</if>
@@ -196,6 +245,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{birthDay},
 			#{className},
 			#{nation},
+			#{promptTime},
+			#{developBatch},
+			#{tutorId},
+			#{tutorName},
+			#{searchCenter},
  			sysdate()
  		)
 	</insert>
@@ -224,6 +278,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
  			<if test="remark != null">remark = #{remark},</if>
 			<if test="nation != null">nation = #{nation},</if>
+			<if test="promptTime != null">prompt_time = #{promptTime},</if>
+			<if test="developBatch != null">develop_batch = #{developBatch},</if>
+			<if test="tutorId != null">tutor_id = #{tutorId},</if>
+			<if test="tutorName != null">tutor_name = #{tutorName},</if>
+			<if test="searchCenter != null">search_center = #{searchCenter},</if>
  			update_time = sysdate()
  		</set>
  		where user_id = #{userId}

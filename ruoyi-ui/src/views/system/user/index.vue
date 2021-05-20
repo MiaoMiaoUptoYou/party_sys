@@ -92,6 +92,19 @@
             ></el-date-picker>
           </el-form-item>
 
+          <el-form-item label="推优日期">
+            <el-date-picker
+              v-model="promptdateRange"
+              size="small"
+              style="width: 240px"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            ></el-date-picker>
+          </el-form-item>
+
           <el-form-item label="发展对象">
             <el-date-picker
               v-model="developdateRange"
@@ -131,6 +144,117 @@
             ></el-date-picker>
           </el-form-item>
 
+          <el-form-item label="出生年月日">
+            <el-date-picker
+              v-model="birthdateRange"
+              size="small"
+              style="width: 240px"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            ></el-date-picker>
+          </el-form-item>
+
+          <el-form-item label="民族" prop="nation">
+            <el-input
+              v-model="queryParams.nation"
+              placeholder="请输入民族"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="班号" prop="className">
+            <el-input
+              v-model="queryParams.className"
+              placeholder="请输入班号"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="性别" prop="sex">
+            <el-input
+              v-model="queryParams.sex"
+              placeholder="男=0，女=1，未知=2"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="身份证号" prop="identityNumber">
+            <el-input
+              v-model="queryParams.identityNumber"
+              placeholder="请输入身份证号"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="计划发展批次" prop="developBatch">
+            <el-input
+              v-model="queryParams.developBatch"
+              placeholder="请输入计划发展批次"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="导师ID" prop="tutorId">
+            <el-input
+              v-model="queryParams.tutorId"
+              placeholder="请输入导师ID"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="导师姓名" prop="tutorName">
+            <el-input
+              v-model="queryParams.tutorName"
+              placeholder="请输入导师姓名"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="导师所属学院研究中心" prop="searchCenter">
+            <el-input
+              v-model="queryParams.searchCenter"
+              placeholder="请输入导师所属学院研究中心"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+
+          <el-form-item label="备注" prop="remarks">
+            <el-input
+              v-model="queryParams.remarks"
+              placeholder="请输入导师所属学院研究中心"
+              clearable
+              size="small"
+              style="width: 240px"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
 
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -259,6 +383,16 @@
             </template>
           </el-table-column>
 
+          <el-table-column label="推优时间" align="center" prop="promptTime" v-if="columns[16].visible" width="160">
+            <template slot-scope="scope">
+              <span>{{parseTimeDay(scope.row.promptTime)}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="计划发展批次" align="center" key="developBatch" prop="developBatch" v-if="columns[17].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="导师ID" align="center" key="tutorId" prop="tutorId" v-if="columns[18].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="导师姓名" align="center" key="tutorName" prop="tutorName" v-if="columns[19].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="导师所属学院研究中心" align="center" key="searchCenter" prop="searchCenter" v-if="columns[20].visible" :show-overflow-tooltip="true" />
           <el-table-column label="备注" align="center" key="remark" prop="remark" v-if="columns[14].visible" width="120" />
 
 
@@ -494,6 +628,42 @@
               <el-input v-model="form.nation" placeholder="请填写全名，如“汉族”" />
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="推优时间" prop="promptTime">
+              <el-date-picker
+                v-model="form.promptTime"
+                size="small"
+                style="width: 240px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="计划发展批次" prop="developBatch">
+              <el-input v-model="form.developBatch" placeholder="请填写计划发展批次" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="导师ID" prop="tutorId">
+              <el-input v-model="form.tutorId" placeholder="请填写导师ID（本科生不填）" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="导师姓名" prop="tutorName">
+              <el-input v-model="form.tutorName" placeholder="请填写导师姓名（本科生不填）" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="导师所属学院研究中心" prop="searchCenter">
+              <el-input v-model="form.searchCenter" placeholder="请填写导师所属学院研究中心（本科生不填）" />
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
@@ -590,6 +760,10 @@
         probationarydateRange: [],
         //成为正式党员时间范围
         officialdateRange: [],
+        //推优时间范围
+        promptdateRange: [],
+        //生日范围
+        birthdateRange: [],
         // 递交入党申请时间
         applyTime: "",
         // 成为积极分子时间
@@ -637,6 +811,8 @@
           userName: undefined,
           //姓名
           nickName: undefined,
+          //性别
+          sex: undefined,
           //民族
           nation: undefined,
           //党支部
@@ -661,6 +837,16 @@
           identityNumber: undefined,
           //出生年月
           birthDay: undefined,
+          //推优时间
+          promptTime: undefined,
+          //计划发展批次
+          developBatch: undefined,
+          //导师ID
+          tutorId: undefined,
+          //导师姓名
+          tutorName: undefined,
+          //导师所属学院研究中心
+          searchCenter: undefined,
           //备注
           remarks : undefined,
         },
@@ -681,7 +867,12 @@
           { key: 12, label: `身份证号`, visible: true },
           { key: 13, label: `出生年月`, visible: true },
           { key: 14, label: `备注`, visible: true },
-          { key: 15, label: `民族`, visible: true }
+          { key: 15, label: `民族`, visible: true },
+          { key: 16, label: `推优时间`, visible: true },
+          { key: 17, label: `计划发展批次`, visible: true },
+          { key: 18, label: `导师ID`, visible: true },
+          { key: 19, label: `导师姓名`, visible: true },
+          { key: 20, label: `导师所属学院研究中心`, visible: true }
         ],
         // 表单校验
         rules: {
@@ -768,7 +959,14 @@
           this.queryParams.params["beginofficial"] = this.officialdateRange[0];
           this.queryParams.params["endofficial"] = this.officialdateRange[1];
         }
-
+        if (null != this.promptdateRange && '' != this.promptdateRange) {
+          this.queryParams.params["beginprompt"] = this.promptdateRange[0];
+          this.queryParams.params["endprompt"] = this.promptdateRange[1];
+        }
+        if (null != this.birthdateRange && '' != this.birthdateRange) {
+          this.queryParams.params["beginbirth"] = this.birthdateRange[0];
+          this.queryParams.params["endbirth"] = this.birthdateRange[1];
+        }
         //
         // this.queryParams = this.addDateRange(this.queryParams,this.applydateRange,"apply");
         // this.queryParams = this.addDateRange(this.queryParams,this.activistdateRange,"activist");
@@ -829,6 +1027,16 @@
           identityNumber: undefined,
           //出生年月
           birthDay: undefined,
+          //推优时间
+          promptTime: undefined,
+          //计划发展批次
+          developBatch: undefined,
+          //导师ID
+          tutorId: undefined,
+          //导师姓名
+          tutorName: undefined,
+          //导师所属学院研究中心
+          searchCenter: undefined,
           remark: undefined,
           postIds: [],
           roleIds: []
@@ -848,6 +1056,8 @@
         this.developdateRange = [];
         this.probationarydateRange = [];
         this.officialdateRange = [];
+        this.promptdateRange = [];
+        this.birthdateRange = [];
         this.resetForm("queryForm");
         this.handleQuery();
       },
